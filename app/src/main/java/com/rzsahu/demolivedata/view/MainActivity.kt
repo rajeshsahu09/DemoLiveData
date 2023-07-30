@@ -1,13 +1,12 @@
-package com.rzsahu.demolivedata
+package com.rzsahu.demolivedata.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.rzsahu.demolivedata.R
 import com.rzsahu.demolivedata.databinding.ActivityMainBinding
+import com.rzsahu.demolivedata.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,12 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         mainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        mainViewModel.getInfoLiveData().observe(this, Observer {
-            binding.information.text = it
-        })
-
-        binding.update.setOnClickListener {
-            mainViewModel.setInformation("Hi! I am updated on click")
-        }
+        binding.mainViewModel = mainViewModel // adding the view model to data binding
+        binding.lifecycleOwner = this // as observer requires lifecycle owner
     }
 }
